@@ -30,3 +30,14 @@ func (db *sqlRepository) InsertData(data *messageModel.MessageRequest) error {
 
 	return nil
 }
+
+//RetrieveDatas - get data from table message_datas
+func (db *sqlRepository) RetrieveDatas(userID int) (*[]messageModel.MessageDatas, error) {
+	var data []messageModel.MessageDatas
+	err := db.Conn.Select("message").Where("user_id = ?", userID).Find(&data).Error
+	if err != nil {
+		return nil, errors.New("messageRepo.RetrieveDatas err : " + err.Error())
+	}
+
+	return &data, nil
+}

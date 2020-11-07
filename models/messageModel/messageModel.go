@@ -15,4 +15,9 @@ type (
 		UserID  int    `json:"user_id" binding:"required"`
 		Message string `json:"message" binding:"required"`
 	}
+
+	//MessageResponse - struct for response message
+	MessageResponse struct {
+		Message string `json:"messages"`
+	}
 )

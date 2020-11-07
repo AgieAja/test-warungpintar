@@ -9,6 +9,15 @@ definitions:
       target:
         type: string
     type: object
+  jsonModel.JSONResponse:
+    properties:
+      data:
+        type: object
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
   jsonModel.JSONResponseBadRequest:
     properties:
       status:
@@ -32,6 +41,11 @@ definitions:
     required:
     - message
     - user_id
+    type: object
+  messageModel.MessageResponse:
+    properties:
+      messages:
+        type: string
     type: object
 info:
   contact:
@@ -57,6 +71,42 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/jsonModel.JSONResponsePost'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/jsonModel.JSONResponseBadRequest'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/jsonModel.JSONErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/jsonModel.JSONResponsePost'
+        "423":
+          description: Locked
+          schema:
+            $ref: '#/definitions/jsonModel.JSONErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/jsonModel.JSONErrorResponse'
+  /message/list/:userid:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/jsonModel.JSONResponse'
+            - properties:
+                Data:
+                  items:
+                    $ref: '#/definitions/messageModel.MessageResponse'
+                  type: array
+              type: object
         "400":
           description: Bad Request
           schema:
