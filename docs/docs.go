@@ -82,6 +82,66 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/message/list/:userid": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/jsonModel.JSONResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/messageModel.MessageResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/jsonModel.JSONResponseBadRequest"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/jsonModel.JSONErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/jsonModel.JSONResponsePost"
+                        }
+                    },
+                    "423": {
+                        "description": "Locked",
+                        "schema": {
+                            "$ref": "#/definitions/jsonModel.JSONErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/jsonModel.JSONErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -96,6 +156,20 @@ var doc = `{
                 },
                 "target": {
                     "type": "string"
+                }
+            }
+        },
+        "jsonModel.JSONResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
                 }
             }
         },
@@ -133,6 +207,14 @@ var doc = `{
                 },
                 "user_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "messageModel.MessageResponse": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "string"
                 }
             }
         }
