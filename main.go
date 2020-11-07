@@ -4,8 +4,11 @@ import (
 	configDb "github.com/AgieAja/go-config-db/database/v2/mysql"
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog/log"
-	//swaggerFiles "github.com/swaggo/files"
-	//ginSwagger "github.com/swaggo/gin-swagger"
+	"tes-warungpintar/docs"
+	"tes-warungpintar/routes/messageHttp"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 
 	"os"
@@ -22,16 +25,12 @@ import (
 
 // !Important : Comments below are formatted as it is to be-
 // read by Swagger tools (Swaggo)
-// @title Service Nobu Dukcapil
+// @title Service Tes Warung Pintar
 // @version 1.0
-// @description Service for connect to dukcapils
+// @description Service for tes warung pintar
 // @BasePath /api/v1
 // @contact.name Tiar Agisti
-// @contact.email tiara.agisti@nobubank.com
-// @securityDefinitions.basic BasicAuth
-
-// @in header
-// @name Authorization
+// @contact.email tiar.agisti@gmail.com
 func main() {
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	if gin.IsDebugging() {
@@ -129,9 +128,12 @@ func main() {
 	log.Info().Msg("Last Update : " + time.Now().Format("2006-01-02 15:04:05"))
 	log.Info().Msg("Service Running version 0.0.1 at port : " + port)
 
+	//module message
+	messageHttp.MessageRoute(r, conn)
+
 	// use ginSwagger middleware to
-	//docs.SwaggerInfo.Schemes = []string{"http", "https"}
-	//r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	if errHTTP := http.ListenAndServe(":"+port, r); errHTTP != nil {
 		log.Error().Msg(errHTTP.Error())

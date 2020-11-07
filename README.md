@@ -6,4 +6,5 @@
 4. run command go mod vendor
 5. run migration table using command go run database/database.go --up
 6. run service
+7. Documentation api {baseURL}/swagger/index.htm
 
