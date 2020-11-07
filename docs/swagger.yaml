@@ -1,0 +1,80 @@
+basePath: /api/v1
+definitions:
+  jsonModel.JSONErrorResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+      target:
+        type: string
+    type: object
+  jsonModel.JSONResponseBadRequest:
+    properties:
+      status:
+        type: integer
+      validation:
+        type: object
+    type: object
+  jsonModel.JSONResponsePost:
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  messageModel.MessageRequest:
+    properties:
+      message:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - message
+    - user_id
+    type: object
+info:
+  contact:
+    email: tiar.agisti@gmail.com
+    name: Tiar Agisti
+  description: Service for tes warung pintar
+  title: Service Tes Warung Pintar
+  version: "1.0"
+paths:
+  /message/create:
+    post:
+      parameters:
+      - description: Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/messageModel.MessageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/jsonModel.JSONResponsePost'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/jsonModel.JSONResponseBadRequest'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/jsonModel.JSONErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/jsonModel.JSONResponsePost'
+        "423":
+          description: Locked
+          schema:
+            $ref: '#/definitions/jsonModel.JSONErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/jsonModel.JSONErrorResponse'
+swagger: "2.0"
