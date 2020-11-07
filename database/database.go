@@ -18,7 +18,7 @@ func main() {
 		},
 	)
 
-	err := godotenv.Load("conf/.env")
+	err := godotenv.Load("config/.env")
 	if err != nil {
 		log.Error().Msg("Failed read configuration database")
 		return
