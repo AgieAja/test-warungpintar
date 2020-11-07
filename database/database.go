@@ -1,8 +1,8 @@
 package main
 
 import (
-	"bitbucket.org/AgieAja3108/nobu-database-migration/migrates"
 	"flag"
+	"github.com/AgieAja/go-migration-database/migrates"
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
